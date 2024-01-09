@@ -3,7 +3,6 @@ import {
   faGraduationCap,
   faPlus,
   faSpinner,
-  faUserShield,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Utilisateur } from "@prisma/client";
@@ -80,6 +79,22 @@ function EtudiantForm({
             <p className="p-error">{errors?.date_naissance?.message}</p>
           </div>
           <div className="container-input">
+            <label htmlFor="lieu_naissance " className="label">
+              Lieu de naissance
+            </label>
+            <input
+              type="texte"
+              {...register("lieu_naissance", {
+                required: "La date de naissance est obligatoire",
+              })}
+              className={`input-form ${
+                errors?.lieu_naissance?.message ? "hasError" : ""
+              }`}
+              maxLength={40}
+            />
+            <p className="p-error">{errors?.lieu_naissance?.message}</p>
+          </div>
+          <div className="container-input">
             <label htmlFor="nationalite" className="label">
               Nationalité
             </label>
@@ -96,20 +111,23 @@ function EtudiantForm({
             <p className="p-error">{errors?.nationalite?.message}</p>
           </div>
           <div className="container-input">
-            <label htmlFor="lieu_naissance " className="label">
-              Lieu de naissance
+            <label htmlFor="civite" className="label">
+              Civilité
             </label>
-            <input
-              type="texte"
-              {...register("lieu_naissance", {
-                required: "La date de naissance est obligatoire",
+            <select
+              {...register("civilite", {
+                required: "La civilité est obligatoire",
               })}
-              className={`input-form ${
-                errors?.lieu_naissance?.message ? "hasError" : ""
+              className={`select-form ${
+                errors?.civilite?.message ? "hasError" : ""
               }`}
-              maxLength={40}
-            />
-            <p className="p-error">{errors?.lieu_naissance?.message}</p>
+            >
+              <option value="">Sélectionner la civilité</option>
+              <option value="Monsieur">Monsieur</option>
+              <option value="Madame">Madame</option>
+              <option value="Mademoiselle">Mademoiselle</option>
+            </select>
+            <p className="p-error">{errors?.civilite?.message}</p>
           </div>
         </div>
       </div>

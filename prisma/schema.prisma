@@ -34,11 +34,13 @@ model Admin {
 }
 
 model Responsable_legal {
-  id_responsable_legal String      @id @db.VarChar(10)
+  id_responsable_legal String      @unique @db.VarChar(10)
   profession           String      @db.Text
   id_utilisateur       String      @db.VarChar(10)
   Relation             Relation[]
   utilisateur          Utilisateur @relation(fields: [id_utilisateur], references: [id_utilisateur], onDelete: Cascade, onUpdate: Cascade)
+
+  @@id([id_responsable_legal, id_utilisateur])
 }
 
 model Relation {
@@ -52,29 +54,34 @@ model Relation {
 }
 
 model Etudiant {
-  num_matricule   String            @id @db.Text
+  num_matricule   String            @unique @db.Text
+  id_utilisateur  String            @db.VarChar(10)
   date_naissance  DateTime          @db.Date
   lieu_naissance  String            @db.Text
   nationalite     String            @db.Text
-  id_utilisateur  String            @db.VarChar(10)
+  civilite        String            @db.Char(12)
   utilisateur     Utilisateur       @relation(fields: [id_utilisateur], references: [id_utilisateur], onDelete: Cascade, onUpdate: Cascade)
   Relation        Relation[]
   Noter_1         Noter_1[]
   Absence         Absence[]
   Demande_absence Demande_absence[]
   Information     Information[]
+
+  @@id([num_matricule, id_utilisateur])
 }
 
 model Enseignant {
-  id_enseignant    String      @id @db.VarChar(10)
+  id_enseignant    String      @unique @db.VarChar(10)
   diplome          String      @db.Text
   grade            String      @db.Text
-  specialite       String     @db.Text
+  specialite       String      @db.Text
   date_recrutement DateTime    @db.Date
   date_arret_ens   DateTime?   @db.Date
   id_utilisateur   String      @db.VarChar(10)
   utilisateur      Utilisateur @relation(fields: [id_utilisateur], references: [id_utilisateur], onDelete: Cascade, onUpdate: Cascade)
   Matiere          Matiere[]
+
+  @@id([id_enseignant, id_utilisateur])
 }
 
 model Niveau {
@@ -106,6 +113,7 @@ model Unite_Enseignement {
   designation_ue String       @db.Text
   credit         Float        @db.Real
   semestre_ue    String       @db.VarChar(3)
+  description_ue String       @db.Text
   Composer_2     Composer_2[]
   Composer_1     Composer_1[]
 }
@@ -129,6 +137,7 @@ model Matiere {
   code_matiere        String               @unique @db.VarChar(10)
   designation_matiere String               @db.Text
   coeff               Float                @db.Real
+  credit_matiere      Float                @db.Real
   v_horaire_matiere   Int                  @db.Integer
   description         String               @db.Text
   id_enseignant       String               @db.VarChar(10)
@@ -160,7 +169,7 @@ model Calendrier_2 {
   session               String    @db.VarChar(2)
   Noter_1               Noter_1[]
 
-  @@id([id_calendrier_2, annee_universitaire_2, semestre])
+  @@id([id_calendrier_2, annee_universitaire_2, semestre, session])
 }
 
 model Noter_1 {

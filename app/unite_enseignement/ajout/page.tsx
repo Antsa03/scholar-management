@@ -18,6 +18,7 @@ function UniteEnseignementAjout() {
       designation_ue: "",
       credit: "",
       semestre_ue: "",
+      description_ue: "",
     },
   });
 

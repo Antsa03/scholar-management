@@ -82,6 +82,7 @@ function EtudiantEdit() {
       date_naissance: "",
       lieu_naissance: "",
       nationalite: "",
+      civilite: "",
       id_utilisateur: "",
     },
   });

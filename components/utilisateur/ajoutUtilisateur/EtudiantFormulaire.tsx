@@ -4,7 +4,6 @@ import EtudiantForm from "@/views/utilisateur/etudiant/EtudiantForm";
 import { SubmitHandler, UseFormTrigger, useForm } from "react-hook-form";
 import Etudiant from "@/models/utilisateur/Etudiant";
 import { Utilisateur } from "@prisma/client";
-import Swal from "sweetalert2";
 import { showSwal, showToast } from "@/utils/swal";
 
 interface EtudiantFormulaireProps {
@@ -32,6 +31,7 @@ function EtudiantFormulaire({
       date_naissance: "",
       lieu_naissance: "",
       nationalite: "",
+      civilite: "",
       id_utilisateur: "",
     },
   });

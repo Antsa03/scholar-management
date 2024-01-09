@@ -1,6 +1,5 @@
 import Observation from "@/models/information/Observation";
 import React from "react";
-import { ChevronsRight } from "react-feather";
 
 interface ObservationFormProps {
   isUpdate: boolean;

@@ -20,6 +20,7 @@ export default async function handler(
         data: {
           designation_matiere: matiereProps.designation_matiere,
           coeff: parseFloat(matiereProps.coeff),
+          credit_matiere: parseFloat(matiereProps.credit_matiere),
           v_horaire_matiere: parseInt(matiereProps.v_horaire_matiere),
           description: matiereProps.description,
           id_enseignant: matiereProps.id_enseignant,

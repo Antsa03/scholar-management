@@ -3,4 +3,5 @@ export default interface Unite_enseignement {
   designation_ue: string;
   credit: string;
   semestre_ue: string;
+  description_ue: string;
 }

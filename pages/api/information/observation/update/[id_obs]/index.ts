@@ -14,8 +14,6 @@ export default async function handler(
     });
     if (observation) {
       const observationProps: Observation = req.body;
-      let isDate_value = false;
-      if (observationProps.date_arret !== "") isDate_value = true;
       const default_date = new Date();
       default_date.setFullYear(1970, 0, 1);
       let admis_value = false;
@@ -26,9 +24,10 @@ export default async function handler(
           admis: admis_value,
           situation: observationProps.situation,
           date_insc: new Date(observationProps.date_insc),
-          date_arret: isDate_value
-            ? new Date(observationProps.date_arret)
-            : default_date,
+          date_arret:
+            observationProps.date_arret === ""
+              ? null
+              : new Date(observationProps.date_arret as string),
         },
       });
       return res.status(200).json(updateObservation);

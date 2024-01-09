@@ -3,7 +3,7 @@ import Unite_enseignement from "@/models/enseignement/Unite_enseignement";
 import { showSwal } from "@/utils/swal";
 import UEForm from "@/views/unite_enseignement/UEForm";
 import { useParams, useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 
 function UniteEnseignementEdit() {
@@ -21,6 +21,7 @@ function UniteEnseignementEdit() {
       designation_ue: "",
       credit: "",
       semestre_ue: "",
+      description_ue: "",
     },
   });
 

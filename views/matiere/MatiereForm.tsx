@@ -72,7 +72,7 @@ function MatiereForm({
                   Coefficient
                 </label>
                 <input
-                  type="number"
+                  type="text"
                   {...register("coeff", {
                     required: "Le coefficient est obligatoire",
                   })}
@@ -106,6 +106,28 @@ function MatiereForm({
                   </p>
                 )}
               </div>
+              <div className="container-input">
+                <label htmlFor="credit_matiere" className="label">
+                  Crédit de la matière
+                </label>
+                <input
+                  type="text"
+                  {...register("credit_matiere", {
+                    required: "Le crédit de la matière est obligatoire",
+                  })}
+                  className={`input-form ${
+                    errors?.credit_matiere?.message ? "hasError" : ""
+                  }`}
+                />
+                {errors?.credit_matiere && (
+                  <p className="p-error">{errors.credit_matiere.message}</p>
+                )}
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <div className="container-col-div-input">
               <div className="container-input">
                 <label htmlFor="v_horaire_matiere" className="label">
                   Volume horaire{" "}

@@ -48,32 +48,33 @@ function Etudiant_ajout_info() {
 
         const etudiant: Etudiant = {
           num_matricule: row[8],
-          date_naissance: row[9],
+          date_naissance: ExcelDateToJSDate(row[9]).toISOString().slice(0, 10),
           lieu_naissance: row[10],
           nationalite: row[11],
+          civilite: row[12],
           id_utilisateur: row[0],
         };
 
         newUtilisateurs.push(utilisateur);
         newEtudiants.push(etudiant);
 
-        const observation = {
-          id_obs: row[16],
-          admis: row[17],
-          situation: row[18],
-          date_insc: ExcelDateToJSDate(row[19]).toISOString().slice(0, 10),
-          date_arret: row[20]
+        const observation: Observation = {
+          id_obs: row[17],
+          admis: row[18],
+          situation: row[19],
+          date_insc: ExcelDateToJSDate(row[20]).toISOString().slice(0, 10),
+          date_arret: row[21]
             ? ExcelDateToJSDate(row[20]).toISOString().slice(0, 10)
             : "",
         };
 
         const information = {
-          id_information: row[12],
+          id_information: row[13],
           num_matricule: row[8],
-          annee_universitaire_5: row[13],
-          id_obs: row[16],
-          id_niveau: row[14],
-          groupe: row[15] + "",
+          annee_universitaire_5: row[14],
+          id_obs: row[17],
+          id_niveau: row[15],
+          groupe: row[16] + "",
         };
 
         newObservation.push(observation);
@@ -86,6 +87,38 @@ function Etudiant_ajout_info() {
     };
 
     reader.readAsArrayBuffer(file);
+  };
+
+  const createUserEtudiant = async () => {
+    if (utilisateurs.length > 0 && etudiants.length > 0) {
+      utilisateurs.forEach(async (utilisateur) => {
+        const response = await fetch("/api/utilisateur/create", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(utilisateur),
+        });
+        if (response.ok) console.log("Utilisateur créé avec succès");
+        else console.error(response);
+      });
+    } else {
+      alert("Utilisateurs et étudiants non définis");
+    }
+  };
+
+  const createEtudiant = async () => {
+    etudiants.forEach(async (etudiant) => {
+      const response = await fetch("/api/utilisateur/etudiant/create", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(etudiant),
+      });
+      if (response.ok) console.log("Etudiant crée avec succès");
+      else console.error(response);
+    });
   };
 
   const saveData = async () => {
@@ -153,12 +186,16 @@ function Etudiant_ajout_info() {
     <div>
       <input type="file" accept=".xlsx,.xls,.csv" onChange={handleFileChange} />{" "}
       <br />
+      <button onClick={createUserEtudiant}>
+        Créer les utilisateurs de type étudiant
+      </button>{" "}
+      <br />
+      <button onClick={createEtudiant}>Créer les étudiants</button> <br />
       <button onClick={() => saveData()}>
-        Enregister dans la base de données
+        Enregister dans les informations supplémentaires
       </button>{" "}
       <br />
       <button onClick={() => deleteObs()}>Delete information</button> <br />
-      <button onClick={() => saveInfo()}>Save info</button> <br />
       <p>{observations.length}</p>
       <div className="flex">
         <pre>{JSON.stringify(utilisateurs, null, 2)}</pre>

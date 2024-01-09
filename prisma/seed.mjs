@@ -23,7 +23,7 @@ async function main() {
     const admin = await prisma.admin.create({
       data: {
         id_admin: "999AN",
-        fonction: "Par défaut",
+        fonction: "Stagiaire",
         id_utilisateur: "999A",
       },
     });

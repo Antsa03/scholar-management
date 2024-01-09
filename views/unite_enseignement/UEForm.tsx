@@ -55,21 +55,6 @@ function UEForm({ isUpdate, register, handleSubmit, errors }: UEFormProps) {
             </div>
           )}
           <div className="container-input">
-            <label htmlFor="crédit" className="label">
-              Crédit
-            </label>
-            <input
-              type="text"
-              {...register("credit", { required: "Le crédit est obligatoire" })}
-              className={`input-form ${
-                errors?.credit?.message ? "hasError" : ""
-              }`}
-            />
-            {errors?.credit && (
-              <p className="p-error">{errors.credit.message}</p>
-            )}
-          </div>
-          <div className="container-input">
             {" "}
             <label htmlFor="designation_ue" className="label">
               Désignation d'unité d'enseignement
@@ -90,6 +75,22 @@ function UEForm({ isUpdate, register, handleSubmit, errors }: UEFormProps) {
           </div>
 
           <div className="container-input">
+            <label htmlFor="crédit" className="label">
+              Crédit
+            </label>
+            <input
+              type="text"
+              {...register("credit", { required: "Le crédit est obligatoire" })}
+              className={`input-form ${
+                errors?.credit?.message ? "hasError" : ""
+              }`}
+            />
+            {errors?.credit && (
+              <p className="p-error">{errors.credit.message}</p>
+            )}
+          </div>
+
+          <div className="container-input">
             {" "}
             <label htmlFor="semestre_ue" className="label">
               Semestre de l'unité d'enseignement
@@ -106,6 +107,24 @@ function UEForm({ isUpdate, register, handleSubmit, errors }: UEFormProps) {
             />
             {errors?.semestre_ue && (
               <p className="p-error">{errors.semestre_ue.message}</p>
+            )}
+          </div>
+
+          <div className="container-text-area gap-2">
+            <label htmlFor="description_ue">Description de l'UE</label>
+            <textarea
+              {...register("description_ue", {
+                required:
+                  "Description de l'unité d'enseignement est obligatoire",
+              })}
+              cols={50}
+              rows={10}
+              className={`text-area-form ${
+                errors?.description_ue?.message ? "hasError" : ""
+              }`}
+            ></textarea>
+            {errors?.description_ue && (
+              <p className="p-error">{errors.description_ue.message}</p>
             )}
           </div>
 

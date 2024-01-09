@@ -16,6 +16,7 @@ export default async function handler(
         designation_ue: unite_enseignementProps.designation_ue,
         credit: parseFloat(unite_enseignementProps.credit),
         semestre_ue: unite_enseignementProps.semestre_ue,
+        description_ue: unite_enseignementProps.description_ue,
       },
     });
     return res.status(200).json(unite_Enseignement);

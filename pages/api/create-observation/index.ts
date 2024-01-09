@@ -16,8 +16,8 @@ export default async function handler(
         date_insc: new Date(observation.date_insc),
         date_arret:
           observation.date_arret === ""
-            ? new Date("1970-01-01")
-            : new Date(observation.date_arret),
+            ? null
+            : new Date(observation.date_arret as string),
       },
     });
   });

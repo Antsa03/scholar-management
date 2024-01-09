@@ -3,5 +3,5 @@ export default interface Observation {
   admis: string;
   situation: string;
   date_insc: string;
-  date_arret: string;
+  date_arret: string | undefined | null;
 }

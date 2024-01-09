@@ -46,6 +46,7 @@ function MatiereList({
               <th className="table-header-cell">Code matière</th>
               <th className="table-header-cell">Désignation matière</th>
               <th className="table-header-cell">Coefficient</th>
+              <th className="table-header-cell">Crédit de la matière</th>
               <th className="table-header-cell">Volume horaire</th>
               <th className="table-header-cell">ID enseignant</th>
               <th colSpan={3} className="table-header-cell">
@@ -61,6 +62,7 @@ function MatiereList({
                   {matiere.designation_matiere}
                 </td>
                 <td className="table-row-cell">{matiere.coeff}</td>
+                <td className="table-row-cell">{matiere.credit_matiere}</td>
                 <td className="table-row-cell">
                   {matiere.v_horaire_matiere} h
                 </td>

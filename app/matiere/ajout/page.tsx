@@ -18,6 +18,7 @@ function MatiereAjout() {
       code_matiere: "",
       designation_matiere: "",
       coeff: "",
+      credit_matiere: "",
       v_horaire_matiere: "",
       description: "",
       id_enseignant: "",

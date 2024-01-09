@@ -79,7 +79,7 @@ function NoteForm({
                   required: "L'id_calendrier_2 est obligatoire",
                 })}
                 className={`select-form ${
-                  errors?.id_noter_1?.message ? "hasError" : ""
+                  errors?.id_calendrier_2?.message ? "hasError" : ""
                 }`}
               >
                 <option value="">Sélectionner un calendrier_2</option>

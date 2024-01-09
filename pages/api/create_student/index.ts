@@ -14,6 +14,7 @@ export default async function handler(
         date_naissance: new Date(etudiant.date_naissance),
         lieu_naissance: etudiant.lieu_naissance,
         nationalite: etudiant.nationalite,
+        civilite: etudiant.civilite,
         id_utilisateur: etudiant.id_utilisateur,
       },
     });

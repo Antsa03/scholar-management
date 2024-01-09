@@ -67,6 +67,12 @@ export default async function handler(
         id_enseignant: enseignant.id_enseignant,
         grade: enseignant.grade,
         diplome: enseignant.diplome,
+        specialite: enseignant.specialite,
+        date_recrutement: enseignant.date_recrutement.toLocaleDateString(),
+        date_arret_ens:
+          enseignant.date_arret_ens === null
+            ? ""
+            : enseignant.date_arret_ens.toLocaleDateString(),
         id_utilisateur: enseignant.id_utilisateur,
         photo_profil: enseignant.utilisateur.photo_profil,
         nom: enseignant.utilisateur.nom,

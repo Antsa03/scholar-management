@@ -15,7 +15,10 @@ export default async function handler(
       admis: response?.admis ? "Passant(e)" : "Redoublant(e)",
       situation: response?.situation,
       date_insc: response?.date_insc.toISOString().slice(0, 10),
-      date_arret: response?.date_arret.toISOString().slice(0, 10),
+      date_arret:
+        response?.date_arret === null
+          ? null
+          : response?.date_arret.toISOString().slice(0, 10),
     };
     return res.status(200).json(observation);
   } catch (error) {

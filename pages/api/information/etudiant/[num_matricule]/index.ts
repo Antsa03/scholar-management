@@ -57,9 +57,10 @@ export default async function handler(
           date_insc: info.observation.date_insc
             .toLocaleDateString()
             .slice(0, 10),
-          date_arret: info.observation.date_arret
-            .toLocaleDateString()
-            .slice(0, 10),
+          date_arret:
+            info.observation.date_arret !== null
+              ? info.observation.date_arret.toLocaleDateString().slice(0, 10)
+              : null,
         };
       });
       return res.status(200).json(information);

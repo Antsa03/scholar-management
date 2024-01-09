@@ -32,6 +32,7 @@ export default async function handler(
         date_naissance: etudiant.date_naissance.toLocaleDateString(),
         lieu_naissance: etudiant.lieu_naissance,
         nationalite: etudiant.nationalite,
+        civilite: etudiant.civilite,
       };
     });
 

@@ -54,9 +54,9 @@ function Sidebar({ isSidebarOpen }: SidebarProps) {
 
             {expanded && (
               <h2
-                className={`font-poppins-regular text-gray-700 font-medium text-2xl tracking-wide`}
+                className={`font-poppins-regular text-gray-700 font-medium text-[14px]`}
               >
-                S.M
+                Scholar Management
               </h2>
             )}
 

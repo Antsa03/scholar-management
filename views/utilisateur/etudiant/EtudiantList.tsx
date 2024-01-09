@@ -79,6 +79,7 @@ function EtudiantList({
               <th className="table-header-cell">Adresse</th>
               <th className="table-header-cell">Téléphone</th>
               <th className="table-header-cell">Nationalité</th>
+              <th className="table-header-cell">Civilité</th>
               <th className="table-header-cell max-w-[160px] break-words">
                 Email
               </th>
@@ -106,6 +107,7 @@ function EtudiantList({
                 <td className="table-row-cell">{etudiant.adresse}</td>
                 <td className="table-row-cell">{etudiant.telephone}</td>
                 <td className="table-row-cell">{etudiant.nationalite}</td>
+                <td className="table-row-cell">{etudiant.civilite}</td>
                 <td className="table-row-cell-email max-w-[160px] break-words">
                   {etudiant.email}
                 </td>

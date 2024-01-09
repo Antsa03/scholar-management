@@ -43,6 +43,7 @@ function ExcelEtudiant() {
           date_naissance: "1970-01-01",
           lieu_naissance: row[11],
           nationalite: row[12],
+          civilite: row[4] === "M" ? "Monsieaur" : "Mademoiselle",
           id_utilisateur: row[0],
         };
 
@@ -66,6 +67,7 @@ function ExcelEtudiant() {
         date_naissance: etudiant.date_naissance,
         lieu_naissance: etudiant.lieu_naissance,
         nationalite: etudiant.nationalite,
+        civilite: "",
         id_utilisateur: etudiant.id_utilisateur,
       };
       const utilisateur_data: Utilisateur = {

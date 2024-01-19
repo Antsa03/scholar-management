@@ -1,0 +1,274 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Utilisateur {
+  id_utilisateur    String              @id @db.VarChar(10)
+  photo_profil      String              @db.Text
+  nom               String              @db.Text
+  prenoms           String              @db.Text
+  sexe              String              @db.VarChar(10)
+  adresse           String              @db.Text
+  telephone         String              @db.VarChar(14)
+  email             String              @unique @db.Text
+  mot_de_passe      String              @db.Text
+  Admin             Admin[]
+  Responsable_legal Responsable_legal[]
+  Etudiant          Etudiant[]
+  Enseignant        Enseignant[]
+}
+
+model Admin {
+  id_admin       String      @id @db.VarChar(10)
+  fonction       String      @db.Text
+  id_utilisateur String      @db.VarChar(10)
+  utilisateur    Utilisateur @relation(fields: [id_utilisateur], references: [id_utilisateur], onDelete: Cascade, onUpdate: Cascade)
+}
+
+model Responsable_legal {
+  id_responsable_legal String      @unique @db.VarChar(10)
+  profession           String      @db.Text
+  id_utilisateur       String      @db.VarChar(10)
+  Relation             Relation[]
+  utilisateur          Utilisateur @relation(fields: [id_utilisateur], references: [id_utilisateur], onDelete: Cascade, onUpdate: Cascade)
+
+  @@id([id_responsable_legal, id_utilisateur])
+}
+
+model Relation {
+  id_relation          String            @unique @db.VarChar(10)
+  id_responsable_legal String            @db.VarChar(10)
+  num_matricule        String            @db.Text
+  responsable_legal    Responsable_legal @relation(fields: [id_responsable_legal], references: [id_responsable_legal], onDelete: Cascade, onUpdate: Cascade)
+  etudiant             Etudiant          @relation(fields: [num_matricule], references: [num_matricule], onDelete: Cascade, onUpdate: Cascade)
+
+  @@id([id_relation, id_responsable_legal, num_matricule])
+}
+
+model Etudiant {
+  num_matricule   String            @unique @db.Text
+  id_utilisateur  String            @db.VarChar(10)
+  date_naissance  DateTime          @db.Date
+  lieu_naissance  String            @db.Text
+  nationalite     String            @db.Text
+  civilite        String            @db.Char(12)
+  utilisateur     Utilisateur       @relation(fields: [id_utilisateur], references: [id_utilisateur], onDelete: Cascade, onUpdate: Cascade)
+  Relation        Relation[]
+  Noter_1         Noter_1[]
+  Absence         Absence[]
+  Demande_absence Demande_absence[]
+  Information     Information[]
+
+  @@id([num_matricule, id_utilisateur])
+}
+
+model Enseignant {
+  id_enseignant    String      @unique @db.VarChar(10)
+  diplome          String      @db.Text
+  grade            String      @db.Text
+  specialite       String      @db.Text
+  date_recrutement DateTime    @db.Date
+  date_arret_ens   DateTime?   @db.Date
+  id_utilisateur   String      @db.VarChar(10)
+  utilisateur      Utilisateur @relation(fields: [id_utilisateur], references: [id_utilisateur], onDelete: Cascade, onUpdate: Cascade)
+  Matiere          Matiere[]
+
+  @@id([id_enseignant, id_utilisateur])
+}
+
+model Niveau {
+  id_niveau          String        @id @db.VarChar(10)
+  designation_niveau String        @db.VarChar(15)
+  Composer_3         Composer_3[]
+  Information        Information[]
+}
+
+model Parcours {
+  id_parcours          String       @id @db.VarChar(10)
+  designation_parcours String       @db.Text
+  Composer_3           Composer_3[]
+  Composer_2           Composer_2[]
+}
+
+model Composer_3 {
+  id_composer_3 String   @unique @db.VarChar(10)
+  id_niveau     String   @db.VarChar(10)
+  id_parcours   String   @db.VarChar(10)
+  niveau        Niveau   @relation(fields: [id_niveau], references: [id_niveau], onDelete: Cascade, onUpdate: Cascade)
+  parcours      Parcours @relation(fields: [id_parcours], references: [id_parcours], onDelete: Cascade, onUpdate: Cascade)
+
+  @@id([id_composer_3, id_niveau, id_parcours])
+}
+
+model Unite_Enseignement {
+  id_ue          String       @id @db.VarChar(10)
+  designation_ue String       @db.Text
+  credit         Float        @db.Real
+  semestre_ue    String       @db.VarChar(3)
+  description_ue String       @db.Text
+  Composer_2     Composer_2[]
+  Composer_1     Composer_1[]
+}
+
+model Composer_2 {
+  id_composer_2      String             @unique @db.VarChar(10)
+  id_parcours        String             @db.VarChar(10)
+  id_ue              String             @db.VarChar(10)
+  parcours           Parcours           @relation(fields: [id_parcours], references: [id_parcours])
+  unite_enseignement Unite_Enseignement @relation(fields: [id_ue], references: [id_ue], onDelete: Cascade, onUpdate: Cascade)
+
+  @@id([id_composer_2, id_parcours, id_ue])
+}
+
+model Calendrier_1 {
+  annee_universitaire_1 String       @id @db.VarChar(12)
+  Composer_1            Composer_1[]
+}
+
+model Matiere {
+  code_matiere        String               @unique @db.VarChar(10)
+  designation_matiere String               @db.Text
+  coeff               Float                @db.Real
+  credit_matiere      Float                @db.Real
+  v_horaire_matiere   Int                  @db.Integer
+  description         String               @db.Text
+  id_enseignant       String               @db.VarChar(10)
+  enseignant          Enseignant           @relation(fields: [id_enseignant], references: [id_enseignant], onDelete: Cascade, onUpdate: Cascade)
+  Composer_1          Composer_1[]
+  Noter_1             Noter_1[]
+  Absence             Absence[]
+  Absence_enseignant  Absence_enseignant[]
+
+  @@id([code_matiere, id_enseignant])
+}
+
+model Composer_1 {
+  id_composer_1         String             @unique @db.VarChar(10)
+  code_matiere          String             @db.VarChar(10)
+  id_ue                 String             @db.VarChar(10)
+  annee_universitaire_1 String             @db.VarChar(12)
+  matiere               Matiere            @relation(fields: [code_matiere], references: [code_matiere], onDelete: Cascade, onUpdate: Cascade)
+  unite_enseignement    Unite_Enseignement @relation(fields: [id_ue], references: [id_ue], onDelete: Cascade, onUpdate: Cascade)
+  calendrier_1          Calendrier_1       @relation(fields: [annee_universitaire_1], references: [annee_universitaire_1], onDelete: Cascade, onUpdate: Cascade)
+
+  @@id([id_composer_1, code_matiere, annee_universitaire_1])
+}
+
+model Calendrier_2 {
+  id_calendrier_2       String    @unique @db.VarChar(10)
+  annee_universitaire_2 String    @db.VarChar(12)
+  semestre              String    @db.VarChar(3)
+  session               String    @db.VarChar(2)
+  Noter_1               Noter_1[]
+
+  @@id([id_calendrier_2, annee_universitaire_2, semestre, session])
+}
+
+model Noter_1 {
+  id_noter_1      String       @unique @db.Text
+  id_calendrier_2 String       @db.VarChar(10)
+  num_matricule   String       @db.Text
+  code_matiere    String       @db.VarChar(10)
+  note_matiere    Float        @db.Real
+  calendrier_2    Calendrier_2 @relation(fields: [id_calendrier_2], references: [id_calendrier_2], onDelete: Cascade, onUpdate: Cascade)
+  etudiant        Etudiant     @relation(fields: [num_matricule], references: [num_matricule], onDelete: Cascade, onUpdate: Cascade)
+  matiere         Matiere      @relation(fields: [code_matiere], references: [code_matiere], onDelete: Cascade, onUpdate: Cascade)
+
+  @@id([id_noter_1, id_calendrier_2, num_matricule, code_matiere])
+}
+
+model Calendrier_3 {
+  id_calendrier_3 String    @unique @db.VarChar(10)
+  date_deb_abs    DateTime  @db.Date
+  heure_deb_abs   DateTime  @db.Time
+  Absence         Absence[]
+
+  @@id([id_calendrier_3, date_deb_abs, heure_deb_abs])
+}
+
+model Absence {
+  id_absence      String       @unique @db.VarChar(10)
+  num_matricule   String       @db.Text
+  code_matiere    String       @db.VarChar(10)
+  id_calendrier_3 String       @db.VarChar(10)
+  type_absence    String       @db.VarChar(6)
+  date_fin_abs    DateTime     @db.Date
+  heure_fin_abs   DateTime     @db.Time
+  justifiee       Boolean      @db.Boolean
+  etudiant        Etudiant     @relation(fields: [num_matricule], references: [num_matricule], onDelete: Cascade, onUpdate: Cascade)
+  matiere         Matiere      @relation(fields: [code_matiere], references: [code_matiere], onDelete: Cascade, onUpdate: Cascade)
+  calendrier_3    Calendrier_3 @relation(fields: [id_calendrier_3], references: [id_calendrier_3], onDelete: Cascade, onUpdate: Cascade)
+
+  @@id([id_absence, num_matricule, code_matiere, id_calendrier_3])
+}
+
+model Demande_absence {
+  id_demande_absence String   @unique @db.VarChar(10)
+  motif              String   @db.Text
+  date_demandee      DateTime @db.Date
+  num_matricule      String   @db.Text
+  etudiant           Etudiant @relation(fields: [num_matricule], references: [num_matricule], onDelete: Cascade, onUpdate: Cascade)
+
+  @@id([id_demande_absence, num_matricule])
+}
+
+model Calendrier_4 {
+  id_calendrier_4    String               @unique @db.VarChar(10)
+  date_deb_abs_ens   DateTime             @db.Date
+  heure_deb_abs_ens  DateTime             @db.Time
+  Absence_enseignant Absence_enseignant[]
+
+  @@id([id_calendrier_4, date_deb_abs_ens, heure_deb_abs_ens])
+}
+
+model Absence_enseignant {
+  id_absence_ens    String   @unique @db.VarChar(10)
+  code_matiere      String   @db.VarChar(10)
+  id_calendrier_4   String   @db.VarChar(10)
+  date_fin_abs_ens  DateTime @db.Date
+  heure_fin_abs_ens DateTime @db.Time
+  justifiee_ens     Boolean  @db.Boolean
+
+  matiere      Matiere      @relation(fields: [code_matiere], references: [code_matiere], onDelete: Cascade, onUpdate: Cascade)
+  calendrier_4 Calendrier_4 @relation(fields: [id_calendrier_4], references: [id_calendrier_4], onDelete: Cascade, onUpdate: Cascade)
+
+  @@id([id_absence_ens, code_matiere, id_calendrier_4])
+}
+
+model Observation {
+  id_obs      String        @id @db.Text
+  admis       Boolean       @db.Boolean
+  situation   String        @db.Text
+  date_insc   DateTime      @db.Date
+  date_arret  DateTime?     @db.Date
+  Information Information[]
+}
+
+model Calendrier_5 {
+  annee_universitaire_5 String        @id @db.VarChar(12)
+  Information           Information[]
+}
+
+model Information {
+  id_information        String @unique @db.Text
+  num_matricule         String @db.Text
+  annee_universitaire_5 String @db.VarChar(12)
+  id_obs                String @db.Text
+  id_niveau             String @db.VarChar(10)
+  groupe                String @db.VarChar(15)
+
+  etudiant     Etudiant     @relation(fields: [num_matricule], references: [num_matricule], onDelete: Cascade, onUpdate: Cascade)
+  calendrier_5 Calendrier_5 @relation(fields: [annee_universitaire_5], references: [annee_universitaire_5], onDelete: Cascade, onUpdate: Cascade)
+  observation  Observation  @relation(fields: [id_obs], references: [id_obs], onDelete: Cascade, onUpdate: Cascade)
+  niveau       Niveau       @relation(fields: [id_niveau], references: [id_niveau], onDelete: Cascade, onUpdate: Cascade)
+
+  @@id([id_information, num_matricule, annee_universitaire_5, id_obs, id_niveau])
+}

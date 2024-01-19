@@ -1,0 +1,114 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Liste des notes</title>
+    <style>
+      table th, table td { border: 1px solid black; min-width: 120px;
+      text-align: center;} th, td { overflow: scroll; padding-top: 15px;
+      padding-bottom: 15px;}
+    </style>
+  </head>
+  <body>
+    <table id="myTable">
+      <thead>
+        <tr>
+          <th>Unité d'enseignement</th>
+          {{#each this.0.unite_enseignements}}
+            <td colspan="{{TailleTab matieres}}">{{designation_ue}}
+              S{{semestre_ue}}:
+              {{v_horaire_ue}}h /
+              {{credit}}
+              crédits</td>
+          {{/each}}
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>Code matière</th>
+          {{#each this.0.unite_enseignements}}
+            {{#each matieres}}
+              <td>{{code_matiere}}</td>
+            {{/each}}
+            <th>Moy UE</th>
+          {{/each}}
+          <th>Moyenne semestre</th>
+          <th>Module à rattraper S{{this.0.unite_enseignements.0.semestre_ue}}</th>
+        </tr>
+        <tr>
+          <th>Nom du module</th>
+          {{#each this.0.unite_enseignements}}
+            {{#each matieres}}
+              <td>{{designation_matiere}}</td>
+            {{/each}}
+            <td></td>
+          {{/each}}
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>Heures</th>
+          {{#each this.0.unite_enseignements}}
+            {{#each matieres}}
+              <td data-cell-type="number">{{v_horaire_matiere}}</td>
+            {{/each}}
+            <td></td>
+          {{/each}}
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>Crédits</th>
+          {{#each this.0.unite_enseignements}}
+            {{#each matieres}}
+              <td
+                data-cell-type="number"
+                data-cell-format-str="0.00"
+              >{{coeff}}</td>
+            {{/each}}
+            <td></td>
+          {{/each}}
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>Nom et prénoms</th>
+          {{#each this.0.unite_enseignements}}
+            {{#each matieres}}
+              <td></td>
+            {{/each}}
+            <td></td>
+          {{/each}}
+          <td></td>
+          <td></td>
+        </tr>
+        {{#each this}}
+          <tr>
+            <td>{{nom}} {{prenoms}}</td>
+            {{#each unite_enseignements}}
+              {{#each matieres}}
+                <td
+                  data-cell-type="number"
+                  data-cell-format-str="0.00"
+                >{{note_matiere}}</td>
+              {{/each}}
+              <td
+                data-cell-type="number"
+                data-cell-format-str="0.00"
+              >{{moy_ue}}</td>
+            {{/each}}
+            <td data-cell-type="number" data-cell-format-str="0.00">
+              {{moy_semestre}}
+            </td>
+            <td>
+              {{#each matiere_rattr}}
+                <span>{{this}}</span>
+              {{/each}}
+            </td>
+          </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </body>
+</html>

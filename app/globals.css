@@ -1,0 +1,580 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*=============================  VARIABLES  ==============================*/
+/*========================================================================*/
+:root {
+  --background-primary-color: #fbfdff;
+  --background-secondary-color: #f4faff;
+  --background-ui-color: #e6f4fe;
+  --background-ui-color-hover: #d5efff;
+  --background-ui-color-press: #c2e5ff;
+  --border-primary-color: #acd8fc;
+  --border-secondary-color: #8ec8f6;
+  --border-third-color: #5eb1ef;
+  --background-solid-blue: #0090ff;
+  --text-primary-color: #1c2024;
+  --text-secondary-color: #60646c;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background-primary-color: #0d1520;
+    --background-secondary-color: #111927;
+    --background-ui-color: #0d2847;
+    --background-ui-color-hover: #003362;
+    --background-ui-color-press: #004074;
+    --border-primary-color: #104d87;
+    --border-secondary-color: #205d9e;
+    --border-third-color: #2870bd;
+    --background-solid-blue: #0090ff;
+    --text-primary-color: #c2e6ff;
+    --text-secondary-color: #70b8ff;
+  }
+}
+
+/*============================ CUSTOM FONTS  =============================*/
+/*========================================================================*/
+
+@font-face {
+  font-family: "DM Sans";
+  src: local("DM Sans"),
+    url("./../public/font/DM_Sans/static/DMSans_36pt-Regular.ttf")
+      format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Poppins";
+  src: local("Poppins Bold"), local("Poppins-Bold"),
+    url("./../public/font/Poppins/Poppins-Bold.ttf") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Poppins-regular";
+  src: local("Poppins-regular"), local("Poppins-regular"),
+    url("./../public/font/Poppins/Poppins-Regular.ttf") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+}
+
+/*============================ LAYER COMPONENTS  =============================*/
+/*============================================================================*/
+
+@layer components {
+  .flex-2 {
+    flex: 2;
+  }
+}
+
+@layer components {
+  .tooltip-modifier {
+    position: relative;
+    cursor: pointer;
+  }
+
+  .tooltip-modifier:after {
+    font-size: 10px;
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 110%;
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 2px 4px;
+    border-radius: 3px;
+    background: #e7b416;
+    color: #ffffff;
+    z-index: 99;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
+  }
+
+  .tooltip-modifier:hover:after {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+@layer components {
+  .tooltip-supprimer {
+    position: relative;
+    cursor: pointer;
+  }
+
+  .tooltip-supprimer:after {
+    font-size: 10px;
+    letter-spacing: 0.025rem;
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 110%;
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 2px 4px;
+    border-radius: 3px;
+    background: #f44336;
+    color: #ffffff;
+    z-index: 99;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
+  }
+
+  .tooltip-supprimer:hover:after {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+@layer components {
+  .tooltip-info {
+    position: relative;
+    cursor: pointer;
+  }
+
+  .tooltip-info:after {
+    font-size: 10px;
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 110%;
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 2px 4px;
+    border-radius: 3px;
+    background: #3b82f6;
+    color: #ffffff;
+    z-index: 99;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
+  }
+
+  .tooltip-info:hover:after {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .tooltip-bottom {
+    position: relative;
+    cursor: pointer;
+  }
+
+  .tooltip-bottom:after {
+    font-size: 10px;
+    content: attr(data-tooltip);
+    position: absolute;
+    top: 110%;
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 2px 4px;
+    border-radius: 3px;
+    background: #3b82f6;
+    color: #ffffff;
+    z-index: 99;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
+  }
+
+  .tooltip-bottom:hover:after {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+/*==============================  BODY  ==================================*/
+/*========================================================================*/
+
+body {
+  font-family: "DM Sans", sans-serif;
+  @apply w-full text-base font-medium p-0 m-0 box-border relative -bg--bg-primary-color dark:-bg--bg-dark-primary-color  -text--text-secondary-color scroll-smooth dark:text-white/90 custom-mobile:w-screen;
+}
+
+/*==========================  SIDEBAR CONTAINER  =========================*/
+/*========================================================================*/
+
+.section-container {
+  @apply flex flex-col w-full h-full relative overflow-hidden pb-12;
+}
+
+.main-container {
+  @apply -bg--bg-secondary-color w-full  pb-4 pt-6 mb-8  h-full rounded-2xl relative dark:-bg--bg-dark-secondary-color;
+}
+
+.main-container-accueil {
+  @apply w-full  pb-4 pt-6 mb-8  h-full rounded-2xl relative dark:-bg--bg-dark-secondary-color;
+}
+
+.main-child-container {
+  @apply flex  justify-center pl-28 w-full;
+}
+
+/* .main-child-edit {
+  @apply flex  justify-center  w-full;
+} */
+
+.navbartop-container {
+  @apply flex flex-row justify-start items-center h-14 py-2 mb-2 pl-2 max-w-fit 2xl:flex 2xl:flex-row 2xl:flex-nowrap w-full;
+}
+
+/*============================ CUSTOM BORDER =============================*/
+/*========================================================================*/
+
+.rounded-custom {
+  border-radius: 12% 4%;
+}
+
+/*=============================  RADIAL BG ===============================*/
+/*========================================================================*/
+
+.bg-radial {
+  background-image: linear-gradient(to top, #4481eb 0%, #04befe 100%);
+}
+
+/*=============================  TEXT STYLE =============================*/
+/*========================================================================*/
+
+.h1 {
+  @apply font-poppins text-lg  sm:text-2xl  -text--text-blue-color tracking-wide  dark:-text--text-dark-primary-color;
+}
+
+.h1-black {
+  @apply font-poppins text-2xl  -text--text-secondary-color tracking-wide  dark:-text--text-dark-primary-color;
+}
+
+.h2 {
+  @apply text-xl font-medium tracking-wide -text--text-secondary-color  dark:-text--text-dark-primary-color;
+}
+
+.h3 {
+  @apply text-lg  font-thin tracking-wide -text--text-primary-gray-color dark:-text--text-dark-primary-color;
+}
+
+/*==============================  SIDEBAR  ===============================*/
+/*========================================================================*/
+
+.sidebar {
+  @apply -bg--bg-primary-color  border-r-[1px] border-gray-300  flex flex-col gap-4  top-0 px-3 h-screen transition-all  z-40 absolute 2xl:left-0 2xl:w-fit 2xl:relative;
+}
+
+/*=============================  FORMS STYLE =============================*/
+/*========================================================================*/
+
+.container-col-div-input {
+  @apply flex flex-col flex-2 w-fit;
+}
+
+.container-row-div-input {
+  @apply flex flex-col gap-3 custom-lg:flex-row custom-lg:gap-16 w-fit;
+}
+
+.container-input {
+  @apply flex flex-col justify-start  w-[340px] relative h-[92px];
+}
+
+.container-input-heure {
+  @apply flex flex-col justify-start  w-[170px] relative h-[92px];
+}
+
+.container-select {
+  @apply flex flex-col justify-start w-[340px] h-[92px];
+}
+
+.container-text-area {
+  @apply flex flex-col w-[728px] h-[132px];
+}
+
+.input-login {
+  @apply h-[44px] w-[280px] -text--text-secondary-color placeholder:-text--text-secondary-color  -bg--bg-primary-color appearance-none px-4 py-2  border-[2px]  -border--border-dark-primary-color outline-none rounded-lg focus:border-blue-500 focus:outline-none sm:w-[400px]  dark:-border--border-dark-primary-color;
+}
+
+.input-form {
+  @apply w-[340px] h-[40px] -bg--bg-primary-color -text--text-secondary-color placeholder:text-gray-500  p-2 appearance-none  rounded-md -border--border-dark-secondary-color border-[1px]  focus:border-blue-500 focus:outline-none dark:-bg--bg-dark-secondary-color dark:-border--border-dark-primary-color dark:text-white/90;
+}
+
+.input-form-update-password {
+  @apply h-[40px] -bg--bg-primary-color -text--text-secondary-color placeholder:-text--text-secondary-color  p-2 appearance-none  rounded-md -border--border-dark-secondary-color border-[1px]  focus:border-blue-500 focus:outline-none dark:-bg--bg-dark-secondary-color dark:-border--border-dark-primary-color dark:text-white/90;
+}
+
+.input-form-heure {
+  @apply w-[160px] h-[40px] -text--text-secondary-color placeholder:-text--text-secondary-color text-center text-base appearance-none  rounded-md bg-white  -border--border-dark-secondary-color border-[1px]  focus:border-blue-500 focus:outline-none;
+}
+
+.search-bar-input {
+  @apply -text--text-secondary-color tracking-wide  px-6 py-3 w-[480px]  rounded-md -border--border-dark-secondary-color border-[1px]   outline-none text-base appearance-none focus:border-blue-500 focus:outline-none;
+}
+
+.btn-search {
+  @apply border-[1px] border-black px-3 py-3 hover:-text--text-blue-color rounded-lg hover:border-blue-400 transition-all duration-100 ease-in-out;
+}
+
+.btn-list-all {
+  @apply border-[1px] h-[44px] -bg--bg-ui-orange-color rounded-md text-white text-base tracking-wider px-6  hover:-bg--bg-ui-orange-color-hover  transition-all duration-100 ease-in-out;
+}
+
+.text-area-form {
+  @apply w-[728px] h-[80px] -text--text-secondary-color placeholder:-text--text-secondary-color  p-2 appearance-none  rounded-md bg-white  -border--border-dark-secondary-color border-[1px]  focus:border-blue-500 focus:outline-none;
+}
+
+.select-form {
+  @apply w-[340px] h-[40px] p-2 -text--text-secondary-color placeholder:-text--text-secondary-color rounded-md bg-white text-sm  border-[#1c2024] border-[1px]  focus:border-blue-500 focus:outline-none;
+}
+
+.input-form:focus,
+.input-id-utilisateur .select-form:focus,
+.input-form-heure:focus,
+.text-area-form:focus,
+.input-id-utilisateur:focus,
+.input-login:focus,
+.search-bar-input:focus {
+  border-color: #3498db;
+  box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.5);
+}
+
+.input-id-utilisateur {
+  @apply p-2 appearance-none -text--text-secondary-color placeholder:-text--text-secondary-color rounded-md bg-white border-gray-700 border-[1px] focus:border-blue-500  focus:outline-none w-[120px] h-[40px];
+}
+
+.hasError {
+  @apply border-red-400 tracking-widest; /* Set the border color to red if there is an error */
+}
+
+.label {
+  @apply block custom-mobile:text-base text-sm -text--text-secondary-color  mb-1 sm:mb-2 dark:-text--text-dark-primary-color;
+}
+
+.p-error {
+  @apply text-red-500 text-[10px];
+}
+
+.button-form {
+  @apply h-[40px] w-[340px]  flex items-center text-base tracking-wider  justify-center -bg--bg-solid-blue hover:-bg--bg-solid-blue/90 text-white font-semibold rounded-md border-0 inset-2 shadow-md shadow-blue-300 transition-all ease-in-out delay-75 hover:scale-105;
+}
+.button-form-short {
+  @apply h-[40px] pl-4 pr-6 py-2 w-fit flex items-center text-base tracking-wider justify-center -bg--bg-solid-blue hover:-bg--bg-solid-blue/90 text-white  rounded-md border-0 inset-2 shadow-md shadow-blue-300 transition-all ease-in-out delay-75 hover:scale-105;
+}
+.button-add-info {
+  @apply h-[40px] w-fit px-4  flex flex-row text-white gap-2 items-center text-base tracking-wider  justify-center border-blue-600 -bg--bg-solid-blue hover:-bg--bg-solid-blue/90  rounded-md   inset-2 shadow-md shadow-blue-300 transition-all ease-in-out delay-75 hover:scale-105;
+}
+.button-cancel-form {
+  @apply h-[40px] w-fit px-4  flex items-center tracking-wider  text-base justify-center border-blue-600  bg-blue-200   rounded-md  hover:bg-blue-300 transition-all ease-in-out delay-75 hover:scale-105;
+}
+
+.button-upload {
+  @apply h-[40px] w-[200px]  flex items-center text-base tracking-wider  justify-center bg-orange-300 text-white font-semibold rounded-md border-0 inset-2 shadow-md shadow-orange-100 transition-all ease-in-out delay-75 hover:scale-105 mt-5 mx-auto;
+}
+
+/*======================== UPLOAD IMAGE STYLE ==========================*/
+/*========================================================================*/
+.upload {
+  width: 100px;
+  position: relative;
+  margin: auto;
+}
+
+.upload img {
+  border-radius: 50%;
+  border: 2px solid #eaeaea;
+}
+
+.upload .round {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background: #00b4ff;
+  width: 32px;
+  height: 32px;
+  line-height: 33px;
+  text-align: center;
+  border-radius: 50%;
+  overflow: hidden;
+  padding: 2px;
+}
+
+.upload .round input[type="file"] {
+  position: absolute;
+  transform: scale(2);
+  opacity: 0;
+  z-index: 4;
+  cursor: pointer;
+}
+
+input[type="file"]::-webkit-file-upload-button {
+  cursor: pointer;
+}
+
+/*======================== SHOW HIDE SUGGESTION ==========================*/
+/*========================================================================*/
+
+.place-suggestion {
+  @apply absolute bottom-0 right-0;
+}
+
+.p-show-all {
+  @apply text-[12px] text-gray-600 tracking-wide flex flex-row gap-1 items-center cursor-pointer;
+}
+
+.ul-show-all {
+  @apply absolute text-sm translate-y-[100px] max-h-36 overflow-scroll p-2 bg-custom-blue-light border-black border-[1px] rounded-md w-full  z-[10000000];
+}
+
+ul.ul-show-all li {
+  @apply cursor-pointer;
+}
+
+/*============================= TABLE STYLE ==============================*/
+/*========================================================================*/
+
+.container-table {
+  @apply flex flex-col relative text-center w-full h-[620px] overflow-y-auto overflow-x-auto mt-5;
+}
+.custom-table {
+  @apply w-full table-auto whitespace-normal absolute;
+}
+.custom-table-short {
+  @apply max-w-[700px] min-w-[600px] table-auto whitespace-normal absolute;
+}
+.table-header {
+  @apply bg-gray-100;
+}
+.table-header-cell {
+  @apply px-2 py-4  font-light text-gray-800 text-left overflow-auto whitespace-normal;
+}
+.table-row {
+  @apply bg-white even:bg-blue-50 text-sm;
+}
+.table-row-cell {
+  @apply px-2 py-2 text-sm  font-light text-left overflow-auto whitespace-normal;
+}
+.table-row-cell-email {
+  @apply px-2 py-2 text-sm text-blue-500 underline text-left overflow-auto whitespace-normal;
+}
+
+.table-header-ue-matiere {
+  @apply bg-gray-100;
+}
+.table-header-cell-ue-matiere {
+  @apply px-2 py-4  font-light text-gray-800 text-left overflow-auto whitespace-normal;
+}
+
+.table-header-cell-text-center-ue-matiere {
+  @apply px-2 py-4 font-medium text-gray-800 text-center overflow-auto whitespace-normal;
+}
+
+/*============================== CLIP PATH  ==============================*/
+/*========================================================================*/
+.clipPathArrowRight {
+  clip-path: polygon(75% 0%, 100% 50%, 75% 100%, 0% 100%, 25% 50%, 0% 0%);
+}
+
+/*=========================== HIDE SCROLLBAR  ============================*/
+/*========================================================================*/
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.hide-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+/*============================== ION ICON  ===============================*/
+/*========================================================================*/
+
+ion-icon {
+  --ionicon-stroke-width: 36px;
+  font-size: 24px;
+  color: var(--text-primary-color);
+}
+.ion-icon-title {
+  --ionicon-stroke-width: 48px;
+  font-size: 32px;
+}
+.ion-icon-middle {
+  --ionicon-stroke-width: 24px;
+  font-size: 28px;
+}
+
+/*=========================== SWEET ALERT  ===============================*/
+/*========================================================================*/
+/* .custom-alert{
+    @apply px-4 pb-4 border-red-800 border-[4px];
+  } */
+
+/*=========================== SWEET ALERT  ===============================*/
+/*========================================================================*/
+.login {
+  @apply h-full w-full flex justify-center items-center -bg--bg-primary-color bg-[radial-gradient(100%_50%_at_50%_0%,rgba(0,163,255,0.13)_0,rgba(0,163,255,0)_50%,rgba(0,163,255,0)_100%)];
+
+  /* background-image: url("../public/img/wave.png");
+    background-repeat: no-repeat;
+    background-size: cover; */
+  /* background-position: bottom center; */
+  /* backdrop-filter: blur(20px) brightness(40px); */
+  /* bg-[linear-gradient(to_right,#f0f0f0_1px,transparent_1px),linear-gradient(to_bottom,#f0f0f0_1px,transparent_1px)] bg-[size:6rem_4rem] */
+}
+
+.login-transparent {
+  @apply flex flex-col items-center justify-center bg-transparent h-full w-full min-h-full max-h-full sm:items-center z-20 overflow-hidden relative;
+  /* backdrop-filter: blur(2px) brightness(90%); */
+}
+
+/* Define your base styles */
+.my-swal {
+  font-size: 1rem; /* 16px */
+  padding: 1rem; /* 16px */
+  margin: 1rem; /* 16px */
+}
+
+/* Adjust styles for 1276px breakpoint */
+@media (min-width: 1276px) {
+  .my-swal {
+    font-size: 1.25rem; /* 20px */
+    padding: 1.5rem; /* 24px */
+    margin: 1.5rem; /* 24px */
+  }
+}
+
+/* Adjust styles for 1920px breakpoint */
+@media (min-width: 1920px) {
+  .my-swal {
+    font-size: 1.5rem; /* 24px */
+    padding: 2rem; /* 32px */
+    margin: 2rem; /* 32px */
+  }
+}
+
+/*=========================== ICON EDIT && DELETE  ===============================*/
+/*================================================================================*/
+.link-edit,
+.link-delete {
+  @apply w-fit h-fit p-1  cursor-pointer;
+}
+
+.icon-fa-edit {
+  @apply text-yellow-500 hover:scale-125 hover:text-yellow-600 transition-all delay-75 ease-in-out;
+}
+
+.icon-fa-delete {
+  @apply text-red-500 hover:scale-125 hover:text-red-600 transition-all delay-75 ease-in-out;
+}
+
+.button-info {
+  @apply tooltip-info bg-blue-500 hover:scale-110 hover:bg-blue-600  text-white font-semibold py-[2px] pl-3 pr-4 rounded-lg text-[12px] flex items-center justify-center;
+}

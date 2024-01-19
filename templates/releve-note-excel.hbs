@@ -1,0 +1,230 @@
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style type="text/css">
+      body { width: 210mm; height: 297mm; padding: 10mm;} .table-container { width: 100%; } table { width:
+      100%; border-collapse: collapse; } 
+      td, th{ 
+        border: 1px solid black; 
+        font-size: 12px; 
+        font-family: "Arial";
+        padding-top: 15px;
+        padding-bottom: 15px;
+      }
+      .code_matiere {
+        width: 70px;
+      }
+     .coeff, .note { 
+      width: 75px; 
+      } 
+      .note_ponderee { 
+        width: 70px; 
+      }
+      .obs { 
+        width:80px; 
+      } 
+      .text-center { 
+        text-align: center; 
+      } 
+      .font-bold {
+      font-weight:bold; 
+      } 
+      .float-right { 
+        float: right; 
+        margin-right: 40px; 
+      }  
+      .text-right { 
+        text-align: right; 
+      } .pr-4 { 
+        padding-right: 4px; 
+      } 
+      .pb-4 { 
+        padding-bottom: 4px; 
+      }
+      .pt-4 { 
+        padding-top: 4px; 
+      } 
+      .h-full { 
+        height: 100%; 
+      } 
+      .pb-2{
+      padding-bottom: 2px; 
+      } 
+      .w-350 {
+      width: 350px; 
+      } 
+      .w-full { 
+        width: 100%; 
+      } 
+      .pr-\[5\%\] { 
+        padding-right: 5%;
+      } 
+      .ml-\[5\%\] { 
+        margin-left: 5%; 
+      } 
+      .w-\[65\%\] { 
+        width: 65%; 
+      } 
+      .mt-\[2\%\] { 
+        margin-top: 2%; 
+      } 
+      .border-none { 
+        border: none; 
+      } 
+      .break-words {
+      overflow-wrap: break-word; 
+      } 
+      .text-right { 
+        text-align: right; 
+      }
+      .mr-\[5\%\] { 
+        padding-right: 5%; 
+      } 
+      .h-\[30px\] {
+        height: 30px;
+      }
+      .text-left {
+        text-align: left;
+      }
+      .overflow {
+        overflow: scroll;
+      }
+      .p-5 {
+        padding: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="table-container">
+      <table id="myTable">
+        <thead>
+          <tr>
+            <td class="border-none h-[30px]"></td>
+          </tr>
+          <tr>
+            <td class="border-none h-[30px]"></td>
+          </tr>
+          <tr>
+            <td class="border-none h-[30px]"></td>
+          </tr>
+          <tr>
+            <td class="border-none h-[30px]"></td>
+          </tr>
+          <tr>
+            <th colspan="2" class="border-none text-left">
+              {{result.nom}} {{result.prenoms}}
+            </th>
+            <td class="border-none"></td>
+            <td class="border-none"></td>
+          </tr>
+          <tr>
+            <th class="border-none text-left" colspan="2">
+              Relevé des notes - Semestre {{result.semestre}}
+            </th>
+            <td class="border-none">
+              N° matricule:
+            </td>
+            <th class="text-left border-none">{{result.num_matricule}}</th>
+          </tr>
+          <tr>
+            <th class="border-none text-left" colspan="2">Session {{result.session}}</th>
+            <td class="border-none text-left">
+              Inscrit en:
+            </td>
+            <th class="text-left border-none">{{result.designation_niveau}}</th>
+          </tr>
+          <tr>
+            <th class="border-none text-left" colspan="2">Année académique:
+              {{result.annee_universitaire_2}}
+            </th>
+            <td class="border-none">Groupe:</td>
+            <th class="text-left border-none">{{result.groupe}}</th>
+          </tr>
+          <tr>
+            <th class="text-center border-none" colspan="6">Notes et résultats</th>
+          </tr>
+          <tr>
+            <th class="code_matiere text-center">Code</th>
+            <th class="matiere text-center">Matières</th>
+            <th class="coeff text-center">Coeff</th>
+            <th class="note text-center">Note</th>
+            <th class="note_ponderee text-center overflow">Note pondérée</th>
+            <th class="obs text-center">Obs</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each result.unite_enseignements}}
+            <tr>
+              <td colspan="5" class="font-bold text-center">
+                <span>UE </span>{{this.designation_ue}}
+                ({{this.credit}}
+                crédits max.)
+              </td>
+              <td></td>
+            </tr>
+            {{#each this.matieres}}
+              <tr>
+                <td class="font-bold text-center">{{this.code_matiere}}</td>
+                <td class="overflow">{{this.designation_matiere}}</td>
+                <td
+                  class="text-center"
+                  data-cell-type="number"
+                  data-cell-format-str="0.00"
+                >{{this.coeff}}</td>
+                <td
+                  class="text-center"
+                  data-cell-type="number"
+                  data-cell-format-str="0.00"
+                >{{this.note_matiere}}</td>
+                <td
+                  class="text-center"
+                  data-cell-type="number"
+                  data-cell-format-str="0.00"
+                >{{notePonderee this.note_matiere this.coeff}}</td>
+                <td></td>
+              </tr>
+            {{/each}}
+
+            <tr>
+              <td></td>
+              <td></td>
+              <td colspan="2" class="font-bold text-center">Moy UE</td>
+              <td
+                class="text-center"
+                data-cell-type="number"
+                data-cell-format-str="0.00"
+              >{{getArrayIndexValue @index ../this.moy_ue_tab }}</td>
+              <td
+                class="text-right pr-4"
+              >{{getArrayIndexValue @index ../this.validation_tab }}</td>
+            </tr>
+          {{/each}}
+          <tr>
+            <td class="font-bold overflow">Semestre ({{result.somme_coeff}}
+              crédits max.)</td>
+            <td></td>
+            <td colspan="2" class="font-bold text-center">Moy.GEN</td>
+            <td
+              class="text-center"
+              data-cell-type="number"
+              data-cell-format-str="0.00"
+            >{{result.moy_semestre}}</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td class="border-none h-[30px]" colspan="6"></td>
+          </tr>
+          <tr>
+            <td class="border-none" colspan="2"></td>
+            <td class="text-center border-none" colspan="4">
+              Antananarivo le
+              {{this.formattedDate}}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </body>
+</html>

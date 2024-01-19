@@ -1,0 +1,58 @@
+{
+  "createDataDirectory": {
+    "transport": "console",
+    "level": "silent"
+  },
+  "httpPort": 5488,
+  "store": {
+    "provider": "fs",
+    "enabled": false
+  },
+  "blobStorage": {
+    "provider": "fs",
+    "enabled": false
+  },
+  "logger": {
+    "console": {
+      "transport": "console",
+      "level": "debug"
+    },
+    "file": {
+      "transport": "file",
+      "level": "silent",
+      "filename": "logs/reporter.log",
+      "enabled": false
+    },
+    "error": {
+      "transport": "file",
+      "level": "silent",
+      "filename": "logs/error.log",
+      "enabled": false
+    }
+  },
+  "chrome-pdf": {
+    "launchOptions": {
+      "args": ["--no-sandbox"]
+    }
+  },
+  "trustUserCode": true,
+  "reportTimeout": 60000,
+  "workers": {
+    "numberOfWorkers": 2
+  },
+  "extensions": {
+    "authentication": {
+      "cookieSession": {},
+      "admin": {
+        "username": "admin",
+        "password": "password"
+      },
+      "enabled": false
+    },
+    "chrome-pdf": {
+      "launchOptions": {
+        "args": ["--no-sandbox"]
+      }
+    }
+  }
+}

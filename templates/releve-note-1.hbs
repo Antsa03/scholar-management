@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style type="text/css">
+      body { 
+        width: 210mm; 
+        height: 297mm; 
+        font-size: 12px;
+        padding: 15mm;
+        font-family: "Arial";
+      }
+      .table-container {
+        width: 100%;
+        height: 80%;
+      }
+      table { 
+        width: 100%;
+        border-collapse: collapse;
+      }
+      td, th{
+        border: 1px solid black;
+        padding: 6px 0px 6px 4px;
+      }
+      header { 
+        height: fit-content;
+        padding: 0;
+        line-height: 0;
+        font-weight: 500;
+      } 
+      .information-container {
+        display: flex; 
+        font-weight: bold;
+        line-height: 0.6;
+        font-size: 12px;
+        margin-top: 3%;
+      } 
+      .code_matiere { 
+        width: 90px; 
+      } 
+      .coeff, .note { 
+        width: 70px; 
+      } 
+      .note_ponderee { 
+        width: 70px; 
+      } 
+      .obs { 
+        width:80px; 
+      } 
+      .text-center { 
+        text-align: center; 
+      } 
+      .font-bold { 
+        font-weight:bold; 
+      } 
+      .float-right { 
+        float: right; 
+        margin-right: 40px; 
+      }
+      h1 {
+        font-size: 14px;
+      }
+      .opacity-0 {
+        opacity: 0;
+      }
+      .text-right {
+        text-align: right;
+      }
+      .pr-4 {
+        padding-right: 4px;
+      }
+      .pb-4 {
+        padding-bottom: 4px;
+      }
+      .pt-4 {
+        padding-top: 4px;
+      }
+      .h-full {
+        height: 100%;
+      }
+      .pb-2{
+        padding-bottom: 2px;
+      }
+      .border-white {
+        border: 1px solid white;
+      }
+
+      .w-350 {
+        width: 350px;
+      }
+      .w-full {
+        width: 100%;
+      }
+      .pr-\[5\%\] {
+        padding-right: 5%;
+      }
+      .ml-\[5\%\] {
+        margin-left: 5%;
+      }
+      .w-\[65\%\] {
+        width: 65%;
+      }
+      footer {
+        text-align: center;
+        border-top: 2px solid #f8A102;
+        height: fit-content;
+        line-height: 0.5;
+        font-weight: 600;
+      }
+      .mt-\[2\%\] {
+        margin-top: 2%;
+      }
+      .flex {
+        display: flex;
+      }
+      .font-sm {
+        font-weight: normal;
+      }
+      .font-lg {
+        font-weight: 500;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <img src="data:image/png;base64,{{imageBase64}}" alt="logo" width="120px" height="80px">
+      <p class="font-lg">Ecole Supérieur des Technologies de l'Information</p>
+    </header>
+    <div class="information-container border-whites">
+      <div class="h-full w-full border-white">
+        <p>{{result.nom}} {{result.prenoms}}</p>
+        <p>Relevé des notes - Semestre {{result.semestre}}</p>
+        <p>Session {{result.session}}</p>
+        <p>Année académique: {{result.annee_universitaire_2}}</p>
+      </div>
+      <div class="h-full w-[65%] ml-[5%] border-white flex">
+        <div class="font-sm">
+          <p class="opacity-0">Text opacity 0</p>
+          <p>N° matricule:</p>
+          <p>Inscrit en: </p>
+          <p>Groupe: </p>
+        </div>
+        <div>
+          <p class="opacity-0">Text opacity 0</p>
+          <p>{{result.num_matricule}}</p>
+          <p>{{result.designation_niveau}}</p>
+          <p>{{result.groupe}}</p>
+        </div>
+      </div>
+    </div>
+    <h1 class="text-center">Notes et résultats</h1>
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th class="code_matiere text-center">Code</th>
+            <th class="matiere text-center">Matières</th>
+            <th class="coeff text-center">Coeff</th>
+            <th class="note text-center">Note</th>
+            <th class="note_ponderee text-center">Note pondérée</th>
+            <th class="obs text-center">Obs</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each result.unite_enseignements}}
+            <tr>
+              <td colspan="5" class="font-bold text-center">
+                <span>UE </span>{{this.designation_ue}}
+                ({{this.credit}}
+                crédits max.)
+              </td>
+              <td></td>
+            </tr>
+            {{#each this.matieres}}
+              <tr>
+                <td class="font-bold text-center">{{this.code_matiere}}</td>
+                <td>{{this.designation_matiere}}</td>
+                <td class="text-center">{{formatNumberLocal this.coeff}}</td>
+                <td class="text-center">{{formatNumberLocal this.note_matiere}}</td>
+                <td class="text-center">{{notePonderee
+                    this.note_matiere
+                    this.coeff
+                  }}</td>
+                <td></td>
+              </tr>
+            {{/each}}
+
+            <tr>
+              <td></td>
+              <td></td>
+              <td colspan="2" class="font-bold text-center">Moy UE</td>
+              <td class="text-center">{{getArrayIndexValue @index ../this.moy_ue_tab}}</td>
+              <td class="text-right pr-4">{{getArrayIndexValue @index ../this.validation_tab}}</td>
+            </tr>
+          {{/each}}
+          <tr>
+            <td class="font-bold">Semestre ({{result.somme_coeff}} crédits max.)</td>
+            <td></td>
+            <td colspan="2" class="font-bold text-center">Moy.GEN</td>
+            <td class="text-center">{{formatNumberLocal result.moy_semestre}}</td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+      <p class="float-right mt-[2%]">Antananarivo le {{this.formattedDate}}</p>
+    </div>
+    <footer>
+      <p>ESTI - 5 rue Pasteur - Immeuble CCIA - Antanimena - Antananarivo 101 - Madagascar</p>
+      <p>Tel: +261 (0) 20 22 248 74 - Email : contact@esti.mg - Site : www.esti.mg</p>
+      <p>NIF : 2002526104 - STAT : 85492 11 2016 0 06989</p>
+    </footer>
+  </body>
+</html>

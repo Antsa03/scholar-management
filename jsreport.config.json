@@ -49,7 +49,7 @@
       },
       "enabled": false
     },
-    "chrome": {
+    "chrome-pdf": {
       "launchOptions": {
         "args": ["--no-sandbox"]
       }

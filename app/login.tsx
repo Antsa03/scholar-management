@@ -20,7 +20,7 @@ export default function Login() {
   };
 
   const estEmailESTI = (email: string): boolean => {
-    const regex = /^[a-zA-Z0-9]+@esti\.mg$/;
+    const regex = /^[a-zA-Z0-9.]+@esti\.mg$/;
     return regex.test(email);
   };
 

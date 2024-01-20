@@ -2,7 +2,8 @@ import prisma from "@/prisma/client";
 import Releve_note from "@/models/note_1/Releve_note";
 
 export async function fetchAllNote(id_calendrier_2: string, groupe: string) {
-  const allNotes: any = await prisma.$queryRaw`
+  const allNotes: any = await prisma.$queryRawUnsafe(
+    `
    SELECT
         u.nom,
         u.prenoms,
@@ -29,6 +30,7 @@ export async function fetchAllNote(id_calendrier_2: string, groupe: string) {
                             'coeff', m.coeff,
                             'note_matiere', note.note_matiere
                         )
+                        ORDER BY note.code_matiere ASC
                     )
                     FROM "Noter_1" note
                     INNER JOIN "Composer_1" c ON note.code_matiere = c.code_matiere
@@ -44,7 +46,7 @@ export async function fetchAllNote(id_calendrier_2: string, groupe: string) {
                     WHERE c.id_ue = ue.id_ue AND note.num_matricule = n.num_matricule
                 )
             )
-            ORDER BY ue.id_ue
+            ORDER BY ue.id_ue ASC
         ) AS unite_enseignements
     FROM
         "Noter_1" n
@@ -70,7 +72,7 @@ export async function fetchAllNote(id_calendrier_2: string, groupe: string) {
         "Parcours" par ON comp_3.id_parcours = par.id_parcours
     INNER JOIN 
         "Composer_2" comp_2 ON comp_2.id_parcours = par.id_parcours AND comp_2.id_ue = ue.id_ue
-    WHERE cal.id_calendrier_2 = ${id_calendrier_2} AND info.groupe = ${groupe}
+    WHERE cal.id_calendrier_2 = $1 AND info.groupe = $2
     GROUP BY
         u.nom,
         u.prenoms,
@@ -84,7 +86,10 @@ export async function fetchAllNote(id_calendrier_2: string, groupe: string) {
         par.id_parcours,
         par.designation_parcours,
         info.groupe;
-  `;
+  `,
+    id_calendrier_2,
+    groupe
+  );
 
   const result: any = allNotes.map((releve_note: any) => {
     let moy_ue = 0;
@@ -176,6 +181,7 @@ export async function fetchReleveNote(
                             'coeff', m.coeff,
                             'note_matiere', note.note_matiere
                         )
+                        ORDER BY note.code_matiere ASC
                     )
                     FROM "Noter_1" note
                     INNER JOIN "Composer_1" c ON note.code_matiere = c.code_matiere
@@ -322,6 +328,7 @@ export async function fetchAllNoteByStudent(num_matricule: string) {
                             'coeff', m.coeff,
                             'note_matiere', note.note_matiere
                         )
+                        ORDER BY note.code_matiere ASC
                     )
                     FROM "Noter_1" note
                     INNER JOIN "Composer_1" c ON note.code_matiere = c.code_matiere

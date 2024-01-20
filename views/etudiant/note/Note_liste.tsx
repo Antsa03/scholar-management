@@ -20,7 +20,7 @@ function Note_liste({ notes, save }: Note_listeProps) {
                 {note.designation_niveau}
               </p>
               <h2 className="text-xl tracking-wider font-semibold -text--text-blue-color">
-                Année universitaire: {note.annee_universitaire_2}, Semestre
+                Année universitaire: {note.annee_universitaire_2}, Semestre{" "}
                 {note.semestre}
               </h2>
             </div>

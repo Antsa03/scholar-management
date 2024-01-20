@@ -6,6 +6,7 @@ import Note_liste from "@/views/etudiant/note/Note_liste";
 import { saveAs } from "file-saver";
 import Etudiant_liste_note from "@/models/etudiant/note/Etudiant_liste_note";
 import { useRouter } from "next/navigation";
+import { showSwal } from "@/utils/swal";
 
 function EtudiantListeNote() {
   const router = useRouter();
@@ -31,7 +32,11 @@ function EtudiantListeNote() {
         pdfBlob,
         `releve-note-${note.num_matricule}-${note.designation_niveau}-S${note.semestre}.pdf`
       );
-      alert("PDF généré et enregistré avec succès !");
+      showSwal(
+        "Pour information",
+        "PDF généré et enregistré avec succès !",
+        "success"
+      );
     } catch (error) {
       console.error(
         "Une erreur s'est produite lors de la génération du PDF :",

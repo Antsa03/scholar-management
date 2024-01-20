@@ -11,9 +11,15 @@ interface LoginViewProps {
   user: User;
   handleInputChange: Function;
   handleSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
+  handleNavigationResetPassword: () => void;
 }
 
-function Login({ user, handleInputChange, handleSubmit }: LoginViewProps) {
+function Login({
+  user,
+  handleInputChange,
+  handleSubmit,
+  handleNavigationResetPassword,
+}: LoginViewProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   return (
     <div className="login">
@@ -73,12 +79,12 @@ function Login({ user, handleInputChange, handleSubmit }: LoginViewProps) {
                 "Se connecter"
               )}
             </button>
-            <Link
-              href={`/password-reset/${user.email}`}
+            <button
               className="hover:-text--text-blue-color"
+              onClick={handleNavigationResetPassword}
             >
               Mot de passe oublié ?
-            </Link>
+            </button>
           </form>
         </div>
       </div>

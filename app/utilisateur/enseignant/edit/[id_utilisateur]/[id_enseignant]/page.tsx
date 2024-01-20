@@ -8,6 +8,7 @@ import { ChevronsRight } from "react-feather";
 import { SubmitHandler, useForm } from "react-hook-form";
 import Utilisateur from "@/models/utilisateur/Utilisateur";
 import Enseignant from "@/models/utilisateur/Enseignant";
+import { showSwal } from "@/utils/swal";
 
 function EnseignantEdit() {
   const params = useParams();
@@ -125,6 +126,41 @@ function EnseignantEdit() {
         if (file) {
           const formData = new FormData();
           formData.append("file", file);
+          let fileType = [
+            "image/jpg",
+            "image/jpeg",
+            "image/png",
+            "image/svg",
+            "image/gif",
+            "image/webp",
+            "image/apng",
+            "image/heic",
+            "image/heic",
+            "image/bmp",
+            "image/tiff",
+            "image/tif",
+            "image/pp2",
+          ];
+          if (!fileType.includes(file.type)) {
+            showSwal(
+              "Pour information",
+              "Le type de fichier n'est pas pris en charge.",
+              "error"
+            );
+          }
+
+          if (file.size > 4 * 1024 * 1024) {
+            showSwal(
+              "Pour information",
+              "La taille du fichier ne doit pas dépasser 4 Mo.",
+              "error"
+            );
+          }
+
+          if (file.size === 0) {
+            showSwal("Pour information", "Pas de fichier choisi", "error");
+            return;
+          }
           const url = await uploadImg(formData);
           let splitUrl = url.split(
             "https://1s8t6r0ul8oomt8j.public.blob.vercel-storage.com/"

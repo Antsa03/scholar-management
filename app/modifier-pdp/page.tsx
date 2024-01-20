@@ -9,7 +9,7 @@ import { showSwal } from "@/utils/swal";
 
 function UpdateProfilePicture() {
   const router = useRouter();
-  const { data: session, status, update }: any = useSession();
+  const { data: session, status }: any = useSession();
   const [selectedImage, setSelectedImage] = useState<
     string | ArrayBuffer | null
   >(null);
@@ -32,7 +32,41 @@ function UpdateProfilePicture() {
     const formData = new FormData(e.currentTarget);
 
     const file = formData.get("file") as File;
-    console.log({ file });
+    let fileType = [
+      "image/jpg",
+      "image/jpeg",
+      "image/png",
+      "image/svg",
+      "image/gif",
+      "image/webp",
+      "image/apng",
+      "image/heic",
+      "image/heic",
+      "image/bmp",
+      "image/tiff",
+      "image/tif",
+      "image/pp2",
+    ];
+    if (!fileType.includes(file.type)) {
+      showSwal(
+        "Pour information",
+        "Le type de fichier n'est pas pris en charge.",
+        "error"
+      );
+    }
+
+    if (file.size > 4 * 1024 * 1024) {
+      showSwal(
+        "Pour information",
+        "La taille du fichier ne doit pas dépasser 4 Mo.",
+        "error"
+      );
+    }
+
+    if (file.size === 0) {
+      showSwal("Pour information", "Pas de fichier choisi", "error");
+      return;
+    }
     const url = await uploadImg(formData);
     if (url) {
       let splitUrl = url.split(
@@ -51,7 +85,7 @@ function UpdateProfilePicture() {
         }
       );
       if (response.ok) {
-        showSwal("Pour information", "Image modifié avec succès", "error");
+        showSwal("Pour information", "Image modifié avec succès", "success");
         const userRole = session.user?.role as string;
         switch (userRole) {
           case "Administrateur":

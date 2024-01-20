@@ -23,6 +23,7 @@ export default async function handler(
            'coeff', m.coeff,
            'credit_matiere', m.credit_matiere
          )
+         ORDER BY c.code_matiere
        ) AS matieres
       FROM
        "Composer_1" c
@@ -35,6 +36,7 @@ export default async function handler(
        ue.id_ue,
        ue.designation_ue,
        ue.credit
+       ORDER BY ue.id_ue ASC
      ),
      annees AS (
       SELECT

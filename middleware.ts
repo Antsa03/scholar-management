@@ -4,6 +4,12 @@ import { getToken } from "next-auth/jwt";
 
 export default withAuth(async function middleware(req: NextRequestWithAuth) {
   try {
+    const auhtorizedPath: string[] = [
+      "/autorisation",
+      "/developpement",
+      "/modifier-mdp",
+      "/modifier-pdp",
+    ];
     const token = await getToken({ req, secret: process.env.SECRET });
     if (!token) {
       return NextResponse.rewrite(new URL("/", req.url));
@@ -20,9 +26,7 @@ export default withAuth(async function middleware(req: NextRequestWithAuth) {
       !startsWithEtudiant &&
       !startsWithApiEtudiant &&
       (startsWithApi ||
-        (pathname !== "/" &&
-          pathname !== "/autorisation" &&
-          pathname !== "/developpement"))
+        (pathname !== "/" && !auhtorizedPath.includes(pathname)))
     ) {
       return NextResponse.rewrite(new URL("/autorisation", req.url));
     }
@@ -40,6 +44,7 @@ export const config = {
     "/accueil",
     "/modifier-mdp",
     "/modifier-pdp",
+    "/autorisation",
     "/utilisateur/:path*",
     "/enseignement/:path*",
     "/pedagogie/:path*",
@@ -57,5 +62,6 @@ export const config = {
     "/etudiant/:path*",
     "/autorisation",
     "/developpement",
+    "/api/:path*",
   ],
 };

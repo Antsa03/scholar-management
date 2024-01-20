@@ -9,6 +9,7 @@ import { useState } from "react";
 import { IonIcon } from "@ionic/react";
 import { reorderTwo, closeOutline } from "ionicons/icons";
 import { usePathname } from "next/navigation";
+import SidebarShow from "@/components/SidebarShow/SidebarShow";
 config.autoAddCss = false;
 
 export default function RootLayout({
@@ -77,23 +78,10 @@ export default function RootLayout({
               <main
                 className={`flex flex-col  gap-2  shadow-gray-600/50 z-0  transition-all ${"w-full flex-grow"}`}
               >
-                <button
-                  onClick={() => toggleSidebar()}
-                  className="absolute  z-[1000] 2xl:hidden hover:rounded-full  top-4 right-2"
-                >
-                  {" "}
-                  {isSidebarOpen ? (
-                    <IonIcon
-                      icon={closeOutline}
-                      className="text-[48px] text-black"
-                    ></IonIcon>
-                  ) : (
-                    <IonIcon
-                      icon={reorderTwo}
-                      className="text-[48px] text-black"
-                    ></IonIcon>
-                  )}
-                </button>
+                <SidebarShow
+                  toggleSidebar={toggleSidebar}
+                  isSidebarOpen={isSidebarOpen}
+                />
                 <div
                   className={`hidden lg:flex flex-row items-center justify-between gap-4 py-2  pl-12 pr-12 2xl:pr-8 h-[80px] -bg--bg-primary-color  border-gray-300 ${"border-b-[1px]"}`}
                 >

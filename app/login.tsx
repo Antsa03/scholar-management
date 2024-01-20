@@ -56,7 +56,7 @@ export default function Login() {
     if (estEmailESTI(user.email) === false) {
       return showSwal("Pour information", "Adresse email invalide", "error");
     }
-    router.push(`/password-resest/${user.email}`);
+    router.push(`/password-reset/${user.email}`);
   };
 
   return (

@@ -3,7 +3,6 @@ import Image from "next/image";
 import React, { useState } from "react";
 import Logo from "@/public/img/logo.png";
 import User from "@/models/login/User";
-import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 
@@ -79,13 +78,13 @@ function Login({
                 "Se connecter"
               )}
             </button>
-            <button
-              className="hover:-text--text-blue-color"
-              onClick={handleNavigationResetPassword}
-            >
-              Mot de passe oublié ?
-            </button>
           </form>
+          <button
+            className="hover:-text--text-blue-color"
+            onClick={() => handleNavigationResetPassword()}
+          >
+            Mot de passe oublié ?
+          </button>
         </div>
       </div>
     </div>
